@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stored Reports</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div style="text-align:right;">
+    <button onclick="logout()">Logout</button>
+  </div>
+  <h1>Warranty Claims</h1>
+  <button onclick="downloadCSV()">Download CSV</button>
+  <table border="1" id="claimsTable"></table>
+  <script>
+    function logout() {
+      fetch('/logout', { method: 'POST' })
+        .then(() => window.location.href = '/login.html');
+    }
+
+    function downloadCSV() {
+      window.location.href = '/export-csv';
+    }
+
+    fetch('/reports')
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById('claimsTable');
+        const headers = Object.keys(data[0] || {});
+        const headerRow = table.insertRow();
+        headers.forEach(h => {
+          const th = document.createElement('th');
+          th.textContent = h;
+          headerRow.appendChild(th);
+        });
+        data.forEach(row => {
+          const tr = table.insertRow();
+          headers.forEach(h => {
+            const td = tr.insertCell();
+            td.textContent = row[h];
+          });
+        });
+      });
+  </script>
+</body>
+</html>

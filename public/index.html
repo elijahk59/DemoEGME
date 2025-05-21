@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Warranty Claim Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div style="text-align:right;">
+    <button onclick="logout()">Logout</button>
+  </div>
+  <h1>Submit Warranty Claim</h1>
+  <form action="/submit" method="POST" enctype="multipart/form-data">
+    <label>VIN: <input type="text" name="vin" required></label><br>
+    <label>Mileage: <input type="text" name="mileage" required></label><br>
+    <label>Customer Name: <input type="text" name="customer" required></label><br>
+    <label>Date: <input type="date" name="date" required></label><br>
+    <label>Complaint: <textarea name="complaint" required></textarea></label><br>
+    <label>Diagnosis: <textarea name="diagnosis" required></textarea></label><br>
+    <label>Remedy: <textarea name="remedy" required></textarea></label><br>
+    <label>Additional Details: <textarea name="additionalDetails"></textarea></label><br>
+    <label>Upload Documents: <input type="file" name="documents" multiple></label><br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    function logout() {
+      fetch('/logout', { method: 'POST' })
+        .then(() => window.location.href = '/login.html');
+    }
+  </script>
+</body>
+</html>
